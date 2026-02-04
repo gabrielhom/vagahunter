@@ -2,6 +2,8 @@
 
 API REST para monitoramento e agregação de vagas de emprego remotas.
 
+![Demo](example.gif)
+
 ## 🚀 Features
 - **Busca de Vagas:** Agrega vagas de múltiplas fontes (Programathor, Remotar, etc).
 - **Banco de Dados:** Armazena histórico de vagas em SQLite.

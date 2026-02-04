@@ -5,3 +5,5 @@ pydantic
 pydantic-settings
 beautifulsoup4
 requests
+streamlit
+pandas
