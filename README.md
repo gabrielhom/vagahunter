@@ -5,10 +5,11 @@ API REST para monitoramento e agregação de vagas de emprego remotas.
 ![Demo](example.gif)
 
 ## 🚀 Features
-- **Busca de Vagas:** Agrega vagas de múltiplas fontes (Programathor, Remotar, etc).
-- **Banco de Dados:** Armazena histórico de vagas em SQLite.
-- **API REST:** Endpoints documentados (Swagger UI).
-- **Architecture:** FastAPI + SQLAlchemy (Clean Architecture).
+- **Busca de Vagas:** Agrega vagas do Programathor (Scraping Inteligente).
+- **Análise com IA:** Integração com **Google Gemini 2.0** para dar nota de Match (0-100) para cada vaga.
+- **Dashboard:** Interface interativa em Streamlit (Mobile Friendly).
+- **Banco de Dados:** Histórico em SQLite.
+- **API REST:** FastAPI com Clean Architecture.
 
 ## 🛠️ Como rodar (Sem Docker)
 

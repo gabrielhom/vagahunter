@@ -40,7 +40,7 @@ try:
             df = pd.DataFrame(jobs)
             
             # Format display
-            display_df = df[['title', 'company', 'source', 'is_remote', 'url', 'created_at']].copy()
+            display_df = df[['title', 'company', 'source', 'is_remote', 'match_score', 'match_reason', 'url']].copy()
             display_df['is_remote'] = display_df['is_remote'].apply(lambda x: "✅" if x else "❌")
             
             # Interactive Table
@@ -48,7 +48,14 @@ try:
                 display_df,
                 column_config={
                     "url": st.column_config.LinkColumn("Link"),
-                    "created_at": st.column_config.DatetimeColumn("Data", format="DD/MM/YYYY HH:mm")
+                    "match_score": st.column_config.ProgressColumn(
+                        "Match",
+                        help="Score calculado por IA",
+                        format="%d",
+                        min_value=0,
+                        max_value=100,
+                    ),
+                    "match_reason": st.column_config.TextColumn("Motivo IA"),
                 },
                 use_container_width=True,
                 hide_index=True

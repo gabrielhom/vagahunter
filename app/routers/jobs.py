@@ -4,6 +4,7 @@ from typing import List
 from .. import schemas, database
 from ..models import job as models
 from ..services.scraper import JobScraper
+from ..services.ai_analyzer import analyze_job
 
 router = APIRouter()
 
@@ -15,9 +16,16 @@ def search_jobs(query: str, db: Session = Depends(database.get_db)):
     
     saved_jobs = []
     for job_data in found_jobs:
-        # 2. Check if exists
+        # Check existing
         existing = db.query(models.Job).filter(models.Job.url == job_data.url).first()
+        
         if not existing:
+            # 2. AI Analysis (only for new jobs)
+            if job_data.description:
+                analysis = analyze_job(job_data.description, query)
+                job_data.match_score = analysis.get("score", 0)
+                job_data.match_reason = analysis.get("reason", "N/A")
+            
             # 3. Save to DB
             db_job = models.Job(**job_data.dict())
             db.add(db_job)

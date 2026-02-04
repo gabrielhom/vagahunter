@@ -8,6 +8,9 @@ class JobBase(BaseModel):
     url: str
     source: str
     is_remote: bool = True
+    description: Optional[str] = None
+    match_score: Optional[int] = None
+    match_reason: Optional[str] = None
 
 class JobCreate(JobBase):
     pass

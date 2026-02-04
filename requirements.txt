@@ -7,3 +7,5 @@ beautifulsoup4
 requests
 streamlit
 pandas
+python-dotenv
+google-generativeai

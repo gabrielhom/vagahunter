@@ -2,13 +2,13 @@ import requests
 from bs4 import BeautifulSoup
 from typing import List
 from ..schemas import JobCreate
+import time
 
 class JobScraper:
     def search_jobs(self, query: str) -> List[JobCreate]:
         found_jobs = []
         
         # 1. Search on Programathor
-        # URL format: https://programathor.com.br/jobs-python
         clean_query = query.lower().strip()
         url = f"https://programathor.com.br/jobs-{clean_query}"
         
@@ -20,42 +20,50 @@ class JobScraper:
             
             if response.status_code == 200:
                 soup = BeautifulSoup(response.content, 'html.parser')
-                
-                # Programathor uses 'cell-list' for job rows
                 cards = soup.select('.cell-list')
                 
-                for card in cards[:10]:
-                    # Title is usually in h3 with text-24 class
+                # Limit to 5 to avoid slow response time (fetching details takes time)
+                for card in cards[:5]:
                     title_elem = card.select_one('.cell-list-content h3')
-                    
-                    # Company info might be tricky, sometimes just text or another span
-                    # Programathor structure varies, let's try generic extraction
-                    
-                    link_elem = card.get('href') # The card itself is often an anchor or has one
+                    link_elem = card.get('href') 
                     if not link_elem:
                         a_tag = card.find('a')
                         if a_tag: link_elem = a_tag['href']
 
                     if title_elem and link_elem:
                         title = title_elem.get_text(strip=True)
-                        company = "Programathor Job" # Default if not found easily
-                        
-                        # Try to find company name (often separate span)
-                        info_spans = card.select('.cell-list-content-icon span')
-                        if info_spans:
-                            company = info_spans[0].get_text(strip=True)
-
                         link = f"https://programathor.com.br{link_elem}"
                         
-                        # Check if remote (Programathor usually tags it)
+                        # Find company
+                        company = "Programathor Job"
+                        info_spans = card.select('.cell-list-content-icon span')
+                        if info_spans: company = info_spans[0].get_text(strip=True)
+                        
                         is_remote = "remoto" in card.get_text().lower()
                         
+                        # --- DEEP SCRAPING (New!) ---
+                        description = "Could not fetch description."
+                        try:
+                            # Sleep to be polite to the server
+                            time.sleep(0.5)
+                            job_resp = requests.get(link, headers=headers, timeout=5)
+                            if job_resp.status_code == 200:
+                                job_soup = BeautifulSoup(job_resp.content, 'html.parser')
+                                # Programathor description selector
+                                desc_div = job_soup.select_one('.line-height-2-4')
+                                if desc_div:
+                                    description = desc_div.get_text(strip=True)
+                        except Exception as e:
+                            print(f"Failed to fetch details for {link}: {e}")
+                        # ----------------------------
+
                         found_jobs.append(JobCreate(
                             title=title,
                             company=company,
                             url=link,
                             source="Programathor",
-                            is_remote=is_remote
+                            is_remote=is_remote,
+                            description=description # Saving the full text
                         ))
                         
         except Exception as e:
