@@ -1,11 +1,16 @@
 from fastapi import FastAPI
 from .database import engine, Base
 from .routers import jobs
+from .config import settings
 
 # Create DB tables
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="VagaHunter API")
+app = FastAPI(
+    title=settings.api_title,
+    description=settings.api_description,
+    version=settings.api_version,
+)
 
 app.include_router(jobs.router, tags=["jobs"])
 

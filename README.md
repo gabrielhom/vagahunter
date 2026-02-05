@@ -12,20 +12,25 @@ API REST para monitoramento e agregação de vagas de emprego remotas.
 - **API REST:** FastAPI com Clean Architecture.
 
 ## 🛠️ Como rodar (Sem Docker)
-
-1. **Instalar dependências:**
+1. **Configurar variáveis de ambiente (.env):**
+   ```bash
+   GEMINI_API_KEY="sua-chave-gemini"
+   ```
+2. **Instalar dependências:**
    ```bash
    python3 -m venv .venv
    source .venv/bin/activate
    pip install -r requirements.txt
    ```
-
-2. **Rodar o servidor:**
+3. **Rodar o servidor:**
    ```bash
    uvicorn app.main:app --reload
    ```
-
-3. **Acessar Docs:**
+4. **Abrir dashboard (opcional):**
+   ```bash
+   streamlit run app/frontend.py
+   ```
+5. **Acessar Docs:**
    Abra http://localhost:8000/docs
 
 ## 🏗️ Estrutura
