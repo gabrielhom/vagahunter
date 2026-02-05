@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from app.config import settings
 
 load_dotenv()
-api_key = os.getenv("GEMINI_API_KEY")
+api_key = os.getenv("GEMINI_API_KEY") or settings.gemini_api_key
 if not api_key:
     raise SystemExit("GEMINI_API_KEY não configurada no .env")
 

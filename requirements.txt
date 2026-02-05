@@ -9,3 +9,5 @@ streamlit
 pandas
 python-dotenv
 google-genai
+tenacity
+httpx

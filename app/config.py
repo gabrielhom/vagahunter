@@ -2,6 +2,8 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     gemini_api_key: str | None = None
+    gemini_model: str = "gemini-2.0-flash"
+    database_url: str = "sqlite:///./data/sql_app.db"
     scraper_timeout: int = 10
     scraper_detail_timeout: int = 5
     scraper_max_results: int = 5

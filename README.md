@@ -14,7 +14,8 @@ API REST para monitoramento e agregação de vagas de emprego remotas.
 ## 🛠️ Como rodar (Sem Docker)
 1. **Configurar variáveis de ambiente (.env):**
    ```bash
-   GEMINI_API_KEY="sua-chave-gemini"
+   GEMINI_API_KEY="sua-chave-gemini" # obrigatório para análise de IA
+   DATABASE_URL="sqlite:///./data/sql_app.db" # opcional; use PostgreSQL em produção
    ```
 2. **Instalar dependências:**
    ```bash
@@ -37,3 +38,8 @@ API REST para monitoramento e agregação de vagas de emprego remotas.
 - `app/models`: Modelos do Banco de Dados.
 - `app/routers`: Endpoints da API.
 - `app/services`: Lógica de Scraping e Busca.
+
+## 🗄️ Banco de Dados & Deploy
+- Default: SQLite em `./data/sql_app.db` (auto-criado).
+- Produção: defina `DATABASE_URL` (ex.: `postgresql+psycopg2://user:pass@host:5432/db`).
+- Rode migrações/backup conforme o provider escolhido.
