@@ -5,7 +5,7 @@ API REST para monitoramento e agregação de vagas de emprego remotas.
 ![Demo](example.gif)
 
 ## 🚀 Features
-- **Busca de Vagas:** Agrega vagas do Programathor (Scraping Inteligente).
+- **Busca de Vagas:** Agrega vagas do Programathor + fontes globais (RemoteOK, WeWorkRemotely) com scraping resiliente e normalização de URLs.
 - **Análise com IA:** Integração com **Google Gemini 2.0** para dar nota de Match (0-100) para cada vaga.
 - **Dashboard:** Interface interativa em Streamlit (Mobile Friendly).
 - **Banco de Dados:** Histórico em SQLite.

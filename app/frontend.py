@@ -57,7 +57,7 @@ try:
                     ),
                     "match_reason": st.column_config.TextColumn("Motivo IA"),
                 },
-                use_container_width=True,
+                width="stretch",
                 hide_index=True
             )
         else:
